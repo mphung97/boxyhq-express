@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  express-app:
+    build: .
+    ports:
+      - "${EXPRESS_PORT}:3000" # Replace ${EXPRESS_PORT} with your desired Express port from .env
+    environment:
+      - NODE_ENV=production # Set your Node environment variables here if needed
+    depends_on:
+      - postgres # Express depends on the PostgreSQL service
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: dbname # Replace dbname with your desired PostgreSQL database name from .env
+      POSTGRES_USER: dbuser # Replace dbuser with your desired PostgreSQL username from .env
+      POSTGRES_PASSWORD: dbpassword # Replace dbpassword with your desired password from .env
+    ports:
+      - "5432:5432" # PostgreSQL port
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: your-email@example.com # Replace with your desired email
+      PGADMIN_DEFAULT_PASSWORD: your-password # Replace with your desired password
+    ports:
+      - "8080:80" # UI for PostgreSQL port
+    depends_on:
+      - postgres # UI depends on the PostgreSQL service
