@@ -1,10 +1,11 @@
-version: "3.8"
+version: "3"
 
 services:
   # express-app:
+  #   container_name: boxhq/express
   #   build: .
   #   ports:
-  #     - "${EXPRESS_PORT}:3000" # Replace ${EXPRESS_PORT} with your desired Express port from .env
+  #     - "3000:3000" # Replace ${EXPRESS_PORT} with your desired Express port from .env
   #   environment:
   #     - NODE_ENV=production # Set your Node environment variables here if needed
   #   depends_on:
@@ -12,6 +13,7 @@ services:
 
   postgres:
     image: postgres
+    container_name: boxhq_postgres
     environment:
       POSTGRES_DB: postgres # Replace dbname with your desired PostgreSQL database name from .env
       POSTGRES_USER: postgres # Replace dbuser with your desired PostgreSQL username from .env
@@ -21,12 +23,24 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
-    container_name: pg_admin_container
+    container_name: boxhq_pg_admin4
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: root@gmail.com
       PGADMIN_DEFAULT_PASSWORD: root
     ports:
-      - "5050:80" # UI for PostgreSQL port
+      - "4001:80"
     depends_on:
-      - postgres # UI depends on the PostgreSQL service
+      - postgres
+
+  mock-saml:
+    image: boxyhq/mock-saml
+    container_name: boxhq_mock_saml
+    ports:
+      - "4000:4000"
+    environment:
+      APP_URL: "http://localhost:4000"
+      ENTITY_ID: "https://saml.example.com/entityid"
+      PUBLIC_KEY: "<PUBLIC_KEY>" # Setup this value
+      PRIVATE_KEY: "<PRIVATE_KEY>" # Setup this value
+    restart: always

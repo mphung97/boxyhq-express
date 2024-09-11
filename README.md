@@ -3,8 +3,20 @@
 This demo app shows how to add SAML SSO to a Express.js app using SAML Jackson.
 
 ## Setup the app
-
 Please follow the below instructions.
+
+### Setup Database
+
+```bash
+# Generate a private/public key combination, this is needed for signing the SAML AuthnRequest
+# openssl req -x509 -newkey rsa:2048 -keyout key.pem -out public.crt -sha256 -days 365000 -nodes
+# Base64 encoded value of public key `cat public.crt | base64`
+PUBLIC_KEY=
+# Base64 encoded value of private key `cat key.pem | base64`
+PRIVATE_KEY=
+
+docker compose up --build -d
+```
 
 ### Install dependencies
 
@@ -21,6 +33,10 @@ Update the `apps/express/.env` with your own values.
 ```bash
 npm run dev:express
 ```
+
+### Setup SAML SSO
+
+[Mock SAML](https://mocksaml.com)
 
 ## Contributing
 
