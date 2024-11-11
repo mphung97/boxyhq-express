@@ -24,3 +24,6 @@ coverage
 benchmarks/graphs
 
 package-lock.json
+
+key.pem
+public.crt

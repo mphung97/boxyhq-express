@@ -41,6 +41,6 @@ services:
     environment:
       APP_URL: "http://localhost:4000"
       ENTITY_ID: "https://saml.example.com/entityid"
-      PUBLIC_KEY: "<PUBLIC_KEY>" # Setup this value
-      PRIVATE_KEY: "<PRIVATE_KEY>" # Setup this value
+      PUBLIC_KEY: ${PUBLIC_KEY} # Setup this value
+      PRIVATE_KEY: ${PRIVATE_KEY} # Setup this value
     restart: always
